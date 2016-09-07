@@ -1,0 +1,21 @@
+import urllib2
+import urllib
+from bs4 import BeautifulSoup
+import json
+import re
+items = []
+	#start = 1 + ( (page-1) * 24)
+	#flipkart URL used for querying the book
+	previous_mrp=100
+	url = urllib2.urlopen("https://www.flipkart.com/orka-xxl-bean-bag-filling/p/itme8gj4gthqjjby?pid=BEBE8GJ4DRJVGHPT&srno=b_1_2&otracker=browse&lid=LSTBEBE8GJ4DRJVGHPTSJPLNQ").read()
+	soup = BeautifulSoup(url, "html.parser")
+	string=str(soup)
+	text=re.search('Rs. [0-9]*',string)
+	text1=re.search('Rs.[0-9]*',string)
+	if text==None:
+		product_mrp=text1.group().split(' ')[0]
+	elif text1==None:
+		product_mrp=text1.group().split(' ')[1]
+	print product_mrp
+	if product_mrp<previous_mrp:
+		print "MRP Decreased!!!!!!!!!!!!!!!!!Inform the customer"
